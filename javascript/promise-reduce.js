@@ -11,12 +11,14 @@ function promiseReduce(asyncFunctions, reduce, initialValue) {
 }
 
 // Второй вариант через await
-async function promiseReduce2(asyncFunctions, reduce, initialValue) {
-  let newResult = initialValue;
+function promiseReduce2(asyncFunctions, reduce, initialValue) {
+  let newResult = Promise.resolve(initialValue);
   for (let i = 0; i < asyncFunctions.length; i++) {
-    let fn = asyncFunctions[i];
-    let result = await fn();
-    newResult = reduce(result, newResult);
+    const fn = asyncFunctions[i];
+
+    newResult = newResult.then(async r => {
+      return reduce(r, await fn());
+    });
   }
   return newResult;
 }
@@ -51,7 +53,7 @@ const fn2 = () =>
     setTimeout(() => resolve(2), 1000);
   });
 
-promiseReduce4(
+promiseReduce2(
   [fn1, fn2],
   (acc, e) => {
     console.log("reduce");
