@@ -3,7 +3,6 @@ const path = require("path");
 const util = require("util");
 
 let folder = process.argv[2];
-
 walkFiles(folder, tree => console.log(tree));
 
 function walkFiles(folder, onSuccess) {
