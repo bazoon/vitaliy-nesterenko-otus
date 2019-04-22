@@ -3,7 +3,7 @@ const path = require("path");
 const util = require("util");
 
 let folder = process.argv[2];
-walkFiles(folder, tree => console.log(tree));
+walkFiles(folder);
 
 function walkFiles(folder, onSuccess) {
   if (!folder) {
@@ -15,17 +15,9 @@ function walkFiles(folder, onSuccess) {
     folder = folder.slice(0, -1);
   }
   let tree = {};
-  processTree(walk(folder, tree), tree, onSuccess);
-}
-
-function processTree(promise, tree, onSuccess) {
-  if (promise.then) {
-    promise.then(p => {
-      processTree(p, tree, onSuccess);
-    });
-  } else {
-    onSuccess(tree);
-  }
+  walk(folder, tree).then(r => {
+    console.log(tree);
+  });
 }
 
 function walk(dir, tree) {
