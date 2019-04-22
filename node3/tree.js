@@ -14,44 +14,42 @@ function walkFiles(folder, onSuccess) {
   if (folder.endsWith("/")) {
     folder = folder.slice(0, -1);
   }
-
   let tree = {};
-  const p = walk(folder, tree);
-  processTree(p);
+  processTree(walk(folder, tree), tree, onSuccess);
+}
 
-  function processTree(promise) {
-    if (promise.then) {
-      promise.then(p => {
-        processTree(p);
-      });
-    } else {
-      onSuccess(tree);
-    }
-  }
-
-  function walk(dir, tree) {
-    tree.dirs = tree.dirs || [];
-    tree.files = tree.files || [];
-    tree.dirs.push(dir);
-    return new Promise((resolve, reject) => {
-      // Требуется node версии 10.15
-      fs.readdir(dir, { withFileTypes: true }, function(err, list) {
-        if (!err) {
-          const promises = list.map(f => {
-            const fullPath = `${dir}/${f.name}`;
-
-            if (f.isDirectory()) {
-              return walk(fullPath, tree);
-            } else {
-              tree.files.push(fullPath);
-              return Promise.resolve();
-            }
-          });
-          return resolve(Promise.all(promises));
-        } else {
-          return resolve(Promise.resolve("ERROR: " + err));
-        }
-      });
+function processTree(promise, tree, onSuccess) {
+  if (promise.then) {
+    promise.then(p => {
+      processTree(p, tree, onSuccess);
     });
+  } else {
+    onSuccess(tree);
   }
+}
+
+function walk(dir, tree) {
+  tree.dirs = tree.dirs || [];
+  tree.files = tree.files || [];
+  tree.dirs.push(dir);
+  return new Promise((resolve, reject) => {
+    // Требуется node версии 10.15
+    fs.readdir(dir, { withFileTypes: true }, (err, list) => {
+      if (!err) {
+        const promises = list.map(f => {
+          const fullPath = `${dir}/${f.name}`;
+
+          if (f.isDirectory()) {
+            return walk(fullPath, tree);
+          } else {
+            tree.files.push(fullPath);
+            return Promise.resolve();
+          }
+        });
+        return resolve(Promise.all(promises));
+      } else {
+        return reject(err);
+      }
+    });
+  });
 }
