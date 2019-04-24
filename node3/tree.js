@@ -19,14 +19,13 @@ walk(folder).then(r => {
 
 async function walk(dir, tree = { dirs: [], files: [] }) {
   const fileList = await readdirP(dir, { withFileTypes: true });
-  const promises = fileList.map(async file => {
+  const promises = fileList.map(file => {
     const fullPath = `${dir}/${file.name}`;
 
     if (file.isDirectory()) {
       return walk(fullPath, tree);
     } else {
       tree.files.push(fullPath);
-      return tree;
     }
   });
 
