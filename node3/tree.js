@@ -23,19 +23,14 @@ async function walk(dir, tree = { dirs: [], files: [] }) {
     const fullPath = `${dir}/${file.name}`;
 
     if (file.isDirectory()) {
-      return await walk(fullPath, tree);
+      return walk(fullPath, tree);
     } else {
-      return { ...tree, files: [...tree.files, fullPath] };
+      tree.files.push(fullPath);
+      return tree;
     }
   });
 
-  const resultTree = { ...tree, dirs: [...tree.dirs, dir] };
-  const subTrees = await Promise.all(promises);
-
-  subTrees.forEach(({ dirs = [], files = [] }) => {
-    resultTree.dirs = [...resultTree.dirs, ...dirs];
-    resultTree.files = [...resultTree.files, ...files];
-  });
-
-  return resultTree;
+  tree.dirs.push(dir);
+  await Promise.all(promises);
+  return tree;
 }
