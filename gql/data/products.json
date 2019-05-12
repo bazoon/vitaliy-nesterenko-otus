@@ -1,0 +1,34 @@
+[
+  {
+    "id": "rJ7T66rh4",
+    "name": "Cheese",
+    "description": "Rokfor",
+    "price": 9,
+    "quantity": 30,
+    "categoryId": 2
+  },
+  {
+    "id": "BkWm7RS3E",
+    "name": "Mil",
+    "description": "2.5%",
+    "price": 2,
+    "quantity": 20,
+    "categoryId": 2
+  },
+  {
+    "id": "Hyd7XAHh4",
+    "name": "Milk",
+    "description": "2.5%",
+    "price": 2,
+    "quantity": 20,
+    "categoryId": 2
+  },
+  {
+    "id": "B15NXRr34",
+    "name": "Butter",
+    "description": "82.5%",
+    "price": 23,
+    "quantity": 30,
+    "categoryId": 2
+  }
+]
