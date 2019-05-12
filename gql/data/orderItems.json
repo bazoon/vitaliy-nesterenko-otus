@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "orderId": 1,
+    "productId": 1,
+    "quantity": 2
+  },
+  {
+    "id": 2,
+    "orderId": 1,
+    "productId": 2,
+    "quantity": 4
+  },
+  {
+    "id": 3,
+    "orderId": 1,
+    "productId": 3,
+    "quantity": 2
+  },
+  {
+    "id": "SJxxeQ0Hn4",
+    "orderId": "Byxe7AHhV",
+    "productId": "rJ7T66rh4",
+    "quantity": 3
+  },
+  {
+    "id": "SklytXAH2N",
+    "orderId": "HyJtmCBh4",
+    "productId": "rJ7T66rh4",
+    "quantity": 3
+  },
+  {
+    "id": "Sk-yFQ0rhN",
+    "orderId": "HyJtmCBh4",
+    "productId": "Hyd7XAHh4",
+    "quantity": 10
+  }
+]
