@@ -1,0 +1,79 @@
+type Product {
+  id: ID!
+  name: String
+  description: String
+  price: Int
+  quantity: Int
+  category: Category
+}
+
+type Category {
+  id: ID!
+  name: String
+}
+
+type User {
+  id: ID!
+  email: String
+  name: String
+}
+
+type Order {
+  id: ID!
+  user: User
+}
+
+type OrderItem {
+  id: ID!
+  order: Order
+  product: Product
+  quantity: Int
+}
+
+type OrderInfo {
+  order: Order
+  items: [OrderItem]
+}
+
+type Query {
+  products: [Product]
+  product(id: ID!): Product
+
+  categories: [Category]
+  category(id: ID!): Category
+
+  users: [User]
+  user(id: ID!): User
+
+  orders: [Order]
+  ordersInfo: [OrderInfo]
+}
+
+type Mutation {
+  createUser(input: CreateUserInput): User
+  createProduct(input: CreateProductInput): Product
+  createOrder(input: CreateOrderInput): OrderInfo
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+}
+
+input CreateProductInput {
+  name: String
+  description: String
+  price: Int
+  quantity: Int
+  categoryId: Int
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int
+}
+
+input CreateOrderInput {
+  userId: ID!
+  items: [OrderItemInput]
+}
