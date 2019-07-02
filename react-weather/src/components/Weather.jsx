@@ -49,8 +49,13 @@ class Weather extends Component {
   };
 
   render() {
-    const { humidity, pressure, temp, wind = {} } = this.props;
-    const { speed } = wind;
+    const {
+      humidity,
+      pressure,
+      temp,
+      wind: { speed }
+    } = this.props;
+
     const { lat = 0, lon = 0 } = this.props.coord;
     const { icon, name, hasError, isLoading } = this.props;
     const { value, items } = this.state;
