@@ -35,10 +35,17 @@
   padding: 0;
   cursor: pointer;
   font-size: 25px;
+  max-width: 400px;
 }
 
 .favorites li:hover {
   color: #4c4990;
+}
+
+.favorites li {
+  display: flex;
+  justify-content: space-between;
+  min-width: 300px;
 }
 
 .favorites-header {
@@ -79,4 +86,30 @@
 
 .error {
   color: #9a1111;
+}
+
+input[role="combobox"] {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 20px;
+  border-radius: 0;
+}
+
+.distinct-city {
+  padding: 20px;
+  display: flex;
+}
+
+.distinct-city svg {
+  width: 150px;
+}
+.city-forecast td div {
+  padding: 10px;
+  font-size: 18px;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
