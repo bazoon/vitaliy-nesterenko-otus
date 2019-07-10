@@ -22,7 +22,7 @@
               <input type="checkbox" v-model="hasSummation"> Суммирование 
             </div>
             <div class="operation">
-              <input type="checkbox" v-model="hasDivision"> Вычитание
+              <input type="checkbox" v-model="hasSubtraction"> Вычитание
             </div>
             <div class="operation">
               <input type="checkbox" v-model="hasMultiplication"> Умножение
