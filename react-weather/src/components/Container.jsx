@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import api from "../api/api";
-import getIconLink from "../utils/getIconLink";
+import { getIconLink } from "../utils/utils";
 import Weather from "./Weather.jsx";
-import hpaToMmhg from "../utils/hpaToMmhg";
+import { hpaToMmhg } from "../utils/utils";
 
 class Container extends Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class Container extends Component {
     this.setState({
       isLoading: true
     });
+
     api.get(city).then(data => {
       const { cod } = data;
       if (cod === 200) {

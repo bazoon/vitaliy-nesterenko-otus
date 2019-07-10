@@ -1,27 +1,40 @@
 import React, { Component } from "react";
+import api from "../api/api";
+import Autocomplete from "react-autocomplete";
+import { debounce } from "../utils/utils";
+import { Link } from "react-router-dom";
 
 class Weather extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cities: []
+      cities: JSON.parse(localStorage.getItem("favorites")) || [],
+      city: "",
+      items: []
     };
+    this.onChangeCity = debounce(this.onChangeCity, 500);
   }
 
-  handleChangeCity = e => {
-    this.currentCity = e.target.value;
+  onChangeCity = value => {
+    api.getCity(value).then(data => {
+      this.setState({
+        items: data
+      });
+    });
   };
 
-  componentDidMount() {
+  handleChangeCity = ({ target: { value } }) => {
     this.setState({
-      cities: JSON.parse(localStorage.getItem("favorites")) || []
+      value
     });
-  }
+    this.onChangeCity(value);
+  };
 
-  handleAddCity = e => {
+  handleAddCity = () => {
+    const { value } = this.state;
     this.setState(
       {
-        cities: this.state.cities.concat(this.currentCity)
+        cities: this.state.cities.concat(value)
       },
       () => {
         localStorage.setItem("favorites", JSON.stringify(this.state.cities));
@@ -29,21 +42,45 @@ class Weather extends Component {
     );
   };
 
+  handleSelectCity = city => {
+    this.setState({
+      value: city
+    });
+  };
+
   render() {
-    const { humidity, pressure, temp, wind = {} } = this.props;
-    const { speed } = wind;
+    const {
+      humidity,
+      pressure,
+      temp,
+      wind: { speed }
+    } = this.props;
+
     const { lat = 0, lon = 0 } = this.props.coord;
     const { icon, name, hasError, isLoading } = this.props;
-    console.log(isLoading);
+    const { value, items } = this.state;
+
     return (
       <div className="weather-wrap">
         {isLoading}
         <div className="city-box">
-          <input
+          <Autocomplete
+            getItemValue={item => item.name}
+            items={items}
+            placeholder="Найти город"
+            renderItem={({ id, name }, isHighlighted) => (
+              <div
+                key={id}
+                style={{
+                  background: isHighlighted ? "lightgray" : "white"
+                }}
+              >
+                <div>{name}</div>
+              </div>
+            )}
+            value={value}
             onChange={this.handleChangeCity}
-            onKeyPress={e => e.charCode === 13 && this.handleAddCity()}
-            className="city-box__search"
-            type="text"
+            onSelect={this.handleSelectCity}
           />
           <button onClick={this.handleAddCity} className="city-box__button">
             Добавить город
@@ -83,8 +120,9 @@ class Weather extends Component {
           <div className="favorites-header">Избранные города</div>
           <ul>
             {this.state.cities.map(city => (
-              <li onClick={() => this.props.onSelectCity(city)} key={city}>
-                {city}
+              <li key={city}>
+                <div onClick={() => this.props.onSelectCity(city)}>{city}</div>
+                <Link to={`/city/${city}`}>Прогноз</Link>
               </li>
             ))}
           </ul>
