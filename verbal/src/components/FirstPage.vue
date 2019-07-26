@@ -2,7 +2,9 @@
   <div class="page">
     <h1>Привет</h1>
     <div>
-      Добро пожаловать!
+      Добро пожаловать на {{dayCount}} тренировочный день.
+      Ваш последний результат:
+      решено {{correct}} из {{total}}. Точность {{accuracy}} %.
       <div class="options">
           <div class="option">
             <input type="range" min="1" max="15" v-model="time" class="slider"/>
@@ -11,7 +13,7 @@
             </div>
           </div>
           <div class="option">
-            <input type="range" min="1" max="15" v-model="complexity" class="slider"/>
+            <input type="range" min="1" max="3" v-model="complexity" class="slider"/>
             <div>
               Сложность {{complexity}}
             </div>
@@ -28,9 +30,6 @@
               <input type="checkbox" v-model="hasMultiplication"> Умножение
             </div>
             <div class="operation">
-              <input type="checkbox" v-model="hasSubtraction"> Вычитание
-            </div>
-            <div class="operation">
               <input type="checkbox" v-model="hasDivision"> Деление
             </div>
             <div class="operation">
@@ -39,7 +38,7 @@
           </div>
 
           <div class="footer">
-            <button>Play</button>
+            <button v-on:click="play">Play</button>
           </div>
         
       </div>
@@ -50,16 +49,93 @@
 <script>
 export default {
   name: "FirstPage",
-  data: function() {
-    return {
-      time: 0,
-      complexity: 0,
-      hasSummation: false,
-      hasSubtraction: false,
-      hasMultiplication: false,
-      hasDivision: false,
-      hasPower: false
-    };
+  methods: {
+    play: function() {
+      this.$router.push("play");
+      this.$store.dispatch("play");
+    }
+  },
+  computed: {
+    correct: {
+      get() {
+        return this.$store.state.correct;
+      }
+    },
+    total: {
+      get() {
+        return this.$store.state.correct + this.$store.state.incorrect;
+      }
+    },
+    accuracy: {
+      get() {
+        const result = Math.round(
+          100 * (this.$store.state.correct / this.total)
+        );
+
+        return Number.isNaN(result) ? 0 : result;
+      }
+    },
+    dayCount: {
+      get() {
+        return this.$store.state.dayCount;
+      }
+    },
+    time: {
+      get() {
+        return Math.round(this.$store.state.remainingTime / 60);
+      },
+      set(value) {
+        this.$store.commit("setTime", value * 60);
+      }
+    },
+    complexity: {
+      get() {
+        return this.$store.state.complexity;
+      },
+      set(value) {
+        this.$store.commit("setComplexity", value);
+      }
+    },
+    hasSummation: {
+      get() {
+        return this.$store.state.hasSummation;
+      },
+      set(value) {
+        this.$store.commit("setSummation", value);
+      }
+    },
+    hasSubtraction: {
+      get() {
+        return this.$store.state.hasSubtraction;
+      },
+      set(value) {
+        this.$store.commit("setSubtraction", value);
+      }
+    },
+    hasMultiplication: {
+      get() {
+        return this.$store.state.hasMultiplication;
+      },
+      set(value) {
+        this.$store.commit("setMultiplication", value);
+      }
+    },
+    hasDivision: {
+      get() {
+        return this.$store.state.hasDivision;
+      },
+      set(value) {
+        this.$store.commit("setDivision", value);
+      }
+    },
+    hasPower: {
+      get() {
+        return this.$store.state.hasPower;
+      },
+      set(value) {
+        this.$store.commit("setPower", value);
+      }
+    }
   }
 };
 </script>
