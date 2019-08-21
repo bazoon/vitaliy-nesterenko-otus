@@ -1,0 +1,14 @@
+<div class="settings">
+  <mat-form-field>
+    <mat-label>Language</mat-label>
+    <mat-select [(ngModel)]="settingsService.language">
+      <mat-option *ngFor="let language of languages" [value]="language.id">{{language.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input placeholder="number of words" matInput [(ngModel)]="settingsService.numberOfWords">
+  </mat-form-field>
+
+</div>
+
+

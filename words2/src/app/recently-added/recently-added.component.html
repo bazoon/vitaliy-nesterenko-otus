@@ -1,0 +1,12 @@
+<div class="word-list">
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let word of words">
+        {{word.original}}
+        &nbsp;-&nbsp;
+        {{word.translation}}
+        &nbsp;-&nbsp;
+        {{word.language}}
+    </mat-list-item>
+  </mat-list>
+</div>
+<button mat-raised-button color="primary" (click)="openDialog()">Add</button>
