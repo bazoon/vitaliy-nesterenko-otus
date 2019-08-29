@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { WordsService } from '../words.service';
 import { LanguagesService } from '../languages.service';
 import { SettingsService } from '../settings.service';
-
-
+import { ToastrService } from 'ngx-toastr';
 
 interface Word {
   original: String,
@@ -20,7 +19,7 @@ interface Word {
 export class RecentlyAddedComponent implements OnInit {
   words: Word[];
 
-  constructor(public dialog: MatDialog, public wordsService: WordsService, public settingsService: SettingsService) {}
+  constructor(public dialog: MatDialog, public wordsService: WordsService, public settingsService: SettingsService) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(Dialog, {
@@ -29,24 +28,22 @@ export class RecentlyAddedComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if (data && data.original && data.translation && data.language) {
+      const isValid = data && data.original && data.translation && data.language;
+      if (isValid) {
         this.wordsService.addWord(data);
       }
     });
   }
-  
+
   getWords() {
     this.wordsService.getWords().subscribe(words => {
       this.words = words;
     });
   }
 
-
   ngOnInit() {
     this.getWords();
-    
   }
-
 }
 
 @Component({
@@ -59,8 +56,8 @@ export class Dialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<Dialog>,
     private languagesService: LanguagesService,
+    private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: Word) {
-      
   }
 
   ngOnInit() {
@@ -73,5 +70,13 @@ export class Dialog implements OnInit {
     this.dialogRef.close();
   }
 
+  onYesClick(): void {
+    const isValid = this.data.original && this.data.translation && this.data.language;
+    if (isValid) {
+      this.dialogRef.close(this.data);
+    } else {
+      this.toastr.warning('Предупреждение!', 'Необходимо заполнить все поля!');
+    }
+  }
 }
 

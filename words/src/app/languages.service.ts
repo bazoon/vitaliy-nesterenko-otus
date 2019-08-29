@@ -1,22 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-
-
-interface Language {
-  language: String,
-  id: String
-}
-
 const languages = [
-  {
-    name: 'English',
-    id: 'english'
-  },
-  {
-    name: 'German',
-    id: 'german'
-  },
+  "English", "German"
 ]
 
 @Injectable({

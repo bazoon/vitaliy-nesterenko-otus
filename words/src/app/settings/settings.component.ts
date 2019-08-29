@@ -16,11 +16,12 @@ interface Settings {
 })
 export class SettingsComponent implements OnInit {
   languages;
-  
-  constructor(public settingsService: SettingsService, public languagesService: LanguagesService) {  }
+
+  constructor(public settingsService: SettingsService, public languagesService: LanguagesService) { }
 
   ngOnInit() {
     this.languagesService.get().subscribe(languages => {
+      console.log(languages)
       this.languages = languages;
     });
   }

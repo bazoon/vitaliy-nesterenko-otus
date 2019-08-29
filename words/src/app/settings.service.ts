@@ -11,13 +11,6 @@ interface Settings {
   providedIn: 'root'
 })
 export class SettingsService {
-  
-  language = 'english';
+  language = 'English';
   numberOfWords = 20;
-  
-  
-
-  
-
-  
 }

@@ -4,15 +4,12 @@ import { RecentlyAddedComponent } from './recently-added/recently-added.componen
 import { GoComponent } from './go/go.component';
 import { SettingsComponent } from './settings/settings.component';
 
-
-
-
 const routes: Routes = [
   {
     path: 'recent',
     component: RecentlyAddedComponent
   },
-  { 
+  {
     path: '',
     redirectTo: '/recent',
     pathMatch: 'full'
