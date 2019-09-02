@@ -2,8 +2,15 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 const languages = [
-  "English", "German"
-]
+  {
+    name: 'English',
+    code: 'en',
+  },
+  {
+    name: 'German',
+    code: 'de'
+  }
+];
 
 @Injectable({
   providedIn: 'root'

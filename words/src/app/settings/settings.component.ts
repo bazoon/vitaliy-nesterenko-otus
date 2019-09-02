@@ -21,7 +21,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.languagesService.get().subscribe(languages => {
-      console.log(languages)
       this.languages = languages;
     });
   }

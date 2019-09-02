@@ -4,10 +4,10 @@ import { WordsService } from '../words.service';
 import { LanguagesService } from '../languages.service';
 import { SettingsService } from '../settings.service';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from "../translate.service";
 
 interface Word {
   original: String,
-  translation: String,
   language: String
 }
 
@@ -19,16 +19,25 @@ interface Word {
 export class RecentlyAddedComponent implements OnInit {
   words: Word[];
 
-  constructor(public dialog: MatDialog, public wordsService: WordsService, public settingsService: SettingsService) { }
+  constructor(public dialog: MatDialog,
+    public wordsService: WordsService,
+    public settingsService: SettingsService
+  ) { }
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(Dialog, {
       width: '250px',
-      data: { original: '', translation: '', language: this.settingsService.language }
+      data: { original: '', language: this.settingsService.language.code }
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      const isValid = data && data.original && data.translation && data.language;
+      if (!data) return;
+
+      const { original, language } = data;
+      const isValid = original && language;
+      console.log(isValid)
+      debugger
       if (isValid) {
         this.wordsService.addWord(data);
       }
@@ -52,11 +61,14 @@ export class RecentlyAddedComponent implements OnInit {
 })
 export class Dialog implements OnInit {
   languages;
+  isLoading = false;
+  diameter = 10;
 
   constructor(
     public dialogRef: MatDialogRef<Dialog>,
     private languagesService: LanguagesService,
     private toastr: ToastrService,
+    public translateService: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: Word) {
   }
 
@@ -71,7 +83,7 @@ export class Dialog implements OnInit {
   }
 
   onYesClick(): void {
-    const isValid = this.data.original && this.data.translation && this.data.language;
+    const isValid = this.data.original && this.data.language;
     if (isValid) {
       this.dialogRef.close(this.data);
     } else {
@@ -79,4 +91,3 @@ export class Dialog implements OnInit {
     }
   }
 }
-
