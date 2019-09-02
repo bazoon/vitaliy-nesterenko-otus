@@ -73,7 +73,7 @@ export class WordsService {
         const isLongEnough = word.length > WORD_MIN_LENGTH;
         const isNewWord = this.hasWord(word);
 
-        if (!isNewWord || !isLongEnough) return;
+        if (isNewWord || !isLongEnough) return;
         word = this.filterNonAlpha(word);
         const [text] = await this.translateService.translate(word, language);
 
