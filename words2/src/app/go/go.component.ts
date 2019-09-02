@@ -12,8 +12,4 @@ export class GoComponent implements OnInit {
   ngOnInit() {
   }
 
-  next() {
-
-  }
-
 }

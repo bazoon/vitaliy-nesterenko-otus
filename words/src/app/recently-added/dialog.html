@@ -1,19 +1,19 @@
 <h1 mat-dialog-title>Enter new word</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <input placeholder="word" matInput [(ngModel)]="data.original">
+    <input required placeholder="word" matInput [(ngModel)]="data.original">
   </mat-form-field>
   <mat-form-field>
-      <input placeholder="translation" matInput [(ngModel)]="data.translation">
+    <input required placeholder="translation" matInput [(ngModel)]="data.translation">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Language</mat-label>
-    <mat-select [(ngModel)]="data.language">
-      <mat-option *ngFor="let language of languages" [value]="language.id">{{language.name}}</mat-option>
+    <mat-select required [(ngModel)]="data.language">
+      <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onYesClick()" cdkFocusInitial>Ok</button>
 </div>
