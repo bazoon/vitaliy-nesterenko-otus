@@ -4,13 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StoreWordsService {
+  private words: string;
+
+  constructor() {
+    const words = localStorage.getItem("words");
+    this.words = words && JSON.parse(words) || [];
+  }
 
   store(words) {
+    this.words = words;
     localStorage.setItem("words", JSON.stringify(words));
   }
 
   get() {
-    const words = localStorage.getItem("words");
-    return words && JSON.parse(words) || [];
+    return this.words;
   }
 }
