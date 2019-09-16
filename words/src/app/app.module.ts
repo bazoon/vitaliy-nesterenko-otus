@@ -19,7 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ToastrModule } from 'ngx-toastr';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { ToastrModule } from 'ngx-toastr';
     MatInputModule,
     FormsModule,
     MatSelectModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     Dialog

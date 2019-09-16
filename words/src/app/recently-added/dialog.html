@@ -1,15 +1,12 @@
 <h1 mat-dialog-title>Enter new word</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <input required placeholder="word" matInput [(ngModel)]="data.original">
-  </mat-form-field>
-  <mat-form-field>
-    <input required placeholder="translation" matInput [(ngModel)]="data.translation">
+    <textarea matInput matAutosize="true" required placeholder="word" matInput [(ngModel)]="data.original"></textarea>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Language</mat-label>
     <mat-select required [(ngModel)]="data.language">
-      <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
+      <mat-option *ngFor="let language of languages" [value]="language.code">{{language.name}}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
