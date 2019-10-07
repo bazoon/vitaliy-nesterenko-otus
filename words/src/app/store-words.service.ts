@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 
+interface Word {
+  original: String,
+  translation: String,
+  language: String
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class StoreWordsService {
-  private words: string;
+  private words: Word[];
 
   constructor() {
     const words = localStorage.getItem("words");

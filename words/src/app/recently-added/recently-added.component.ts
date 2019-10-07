@@ -36,8 +36,6 @@ export class RecentlyAddedComponent implements OnInit {
 
       const { original, language } = data;
       const isValid = original && language;
-      console.log(isValid)
-      debugger
       if (isValid) {
         this.wordsService.addWord(data);
       }

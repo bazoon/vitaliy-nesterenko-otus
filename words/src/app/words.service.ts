@@ -67,7 +67,7 @@ export class WordsService {
     const isText = original.indexOf(" ") > 0
 
     if (isText) {
-      const words = original.split(" ");
+      const words = original.split(/\s+|\.|\!\?/);
 
       words.forEach(async (word) => {
         const isLongEnough = word.length > WORD_MIN_LENGTH;
@@ -88,7 +88,7 @@ export class WordsService {
       const isNewWord = this.hasWord(word);
       if (isNewWord) {
         this.words.push(word);
-        localStorage.setItem("word", JSON.stringify(this.words));
+        this.storeWordsService.store(this.words);
       }
     }
 
