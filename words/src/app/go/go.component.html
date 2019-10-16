@@ -1,5 +1,15 @@
-<h2>Learning</h2>
-<mat-form-field>
-  <input placeholder="word" matInput [(ngModel)]="data">
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="next()">Next</button>
+<h2>Learning {{formatTime()}}</h2>
+<button mat-raised-button color="primary" (click)="start()">Начать</button>
+<div *ngIf="word">
+  <br>
+  <div>{{numberOfRight}} / {{settingsService.numberOfWords}}</div>
+
+  <mat-form-field>
+    <input disabled matInput [(ngModel)]="word.original">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="translation">
+  </mat-form-field>
+
+  <button [(disabled)]="!hasMore" mat-raised-button color="primary" (click)="next()">Next</button>
+</div>

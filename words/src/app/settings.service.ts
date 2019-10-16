@@ -15,4 +15,5 @@ export class SettingsService {
     code: 'en'
   }
   numberOfWords = 20;
+  time = 1;
 }
