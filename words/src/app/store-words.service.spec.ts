@@ -9,4 +9,20 @@ describe('StoreWordsService', () => {
     const service: StoreWordsService = TestBed.get(StoreWordsService);
     expect(service).toBeTruthy();
   });
+
+  it('should store words', () => {
+    const service: StoreWordsService = TestBed.get(StoreWordsService);
+    const words = [
+      {
+        original: 'table',
+        translation: 'стол',
+        language: 'en'
+      }
+    ];
+
+    service.store(words);
+    expect(service.get()).toEqual(words);
+  });
+
+
 });
