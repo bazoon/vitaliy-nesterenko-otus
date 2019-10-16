@@ -29,8 +29,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     GoComponent,
     SettingsComponent,
     Dialog,
-    NavigationComponent,
-
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
